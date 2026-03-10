@@ -34,11 +34,61 @@ function animaster() {
         return result.join(' ');
     }
 
+    //Задача4: сложные анимации
+    
+    function moveAndHide(element, duration) {
+        const moveTime = duration * 2/5;
+        const fadeTime = duration * 3/5;
+        
+        move(element, moveTime, {x: 100, y: 20});
+        
+        setTimeout(() => {
+            fadeOut(element, fadeTime);
+        }, moveTime);
+    }
+    
+    function showAndHide(element, duration) {
+        const stepTime = duration / 3;
+        
+        fadeIn(element, stepTime);
+        
+        setTimeout(() => {
+            fadeOut(element, stepTime);
+        }, stepTime * 2);
+    }
+    
+    function heartBeating(element) {
+        let isRunning = true;
+        let phase = 0;
+        
+        function pulse() {
+            if (!isRunning) return;
+            
+            const ratio = phase === 0 ? 1.4 : 1;
+            scale(element, 500, ratio);
+            
+            phase = 1 - phase;
+            
+            setTimeout(pulse, 500);
+        }
+        
+        pulse();
+        
+        return {
+            stop: function() {
+                isRunning = false;
+            }
+        };
+    }
+
     return {
         fadeIn,
         move,
         scale,
-        fadeOut
+        fadeOut,
+        moveAndHide,
+        showAndHide,
+        heartBeating
     };
 }
 
@@ -60,6 +110,32 @@ function addListeners() {
             const block = document.getElementById('scaleBlock');
             animaster().scale(block, 1000, 1.25);
         });
+    
+    
+    document.getElementById('moveAndHidePlay')?.addEventListener('click', function () {
+        const block = document.getElementById('moveAndHideBlock');
+        animaster().moveAndHide(block, 2000);
+    });
+    
+    document.getElementById('showAndHidePlay')?.addEventListener('click', function () {
+        const block = document.getElementById('showAndHideBlock');
+        animaster().showAndHide(block, 3000);
+    });
+    
+    let heartbeatControl = null;
+    
+    document.getElementById('heartBeatingPlay')?.addEventListener('click', function () {
+        const block = document.getElementById('heartBeatingBlock');
+        if (heartbeatControl) heartbeatControl.stop();
+        heartbeatControl = animaster().heartBeating(block);
+    });
+    
+    document.getElementById('heartBeatingStop')?.addEventListener('click', function () {
+        if (heartbeatControl) {
+            heartbeatControl.stop();
+            heartbeatControl = null;
+        }
+    });
 }
 
 addListeners();
