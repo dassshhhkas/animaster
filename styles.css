@@ -25,6 +25,7 @@
     font-size: 12px;
     background: none;
     border: 1px solid #ccc;
+    cursor: pointer;
 }
 
 .button-group {
@@ -36,41 +37,6 @@
 .button-group .button {
     margin-left: 0;
 }
-
-.button-reset {
-    background-color: #ff9800;
-    color: white;
-    border: none;
-}
-
-.button-reset:hover {
-    background-color: #f57c00;
-}
-
-.button-stop {
-    background-color: #f44336;
-    color: white;
-    border: none;
-}
-
-.button-stop:hover {
-    background-color: #d32f2f;
-}
-
-#moveAndHidePlay,
-#showAndHidePlay,
-#heartBeatingPlay {
-    background-color: #4caf50;
-    color: white;
-    border: none;
-}
-
-#moveAndHidePlay:hover,
-#showAndHidePlay:hover,
-#heartBeatingPlay:hover {
-    background-color: #43a047;
-}
-
 
 .block {
     position: relative;
